@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Another FHIR App Redirected</title>
+    
+    <script src="js/jquery.js"></script>
+    <script src="js/underscore.js"></script>
+    <script src="js/fhir-client.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script src="js/script.js"></script>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/main.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+      
+      html {box-sizing: border-box;}
+      *, *:before, *:after {box-sizing: inherit;}
+      footer{position:fixed; bottom:0.5vw; right:0.5vw;}
+
+    </style>
+
+
+  </head>
+  <body>
+  <div id="main2"></div>
+  
+  <script>
+  
+  $(document).ready(function(){
+	  console.log("entered another");
+      getFHIR()
+      console.log("finished another");
+    }) 
+  
+  
+  function getFHIR(){
+      FHIR.oauth2.ready(function (fhirClient) {
+      	//console.log(fhirClient.tokenResponse.access_token);
+      	console.log(fhirClient);
+         // myApp.smart = fhirClient;
+          $("#main2").html("Access_token:"+fhirClient.tokenResponse.access_token+" ")
+          console.log("Authorization': Bearer"+" "+fhirClient.tokenResponse.access_token);
+         //console.log("https://fhir-ehr.sandboxcerner.com/dstu2/0b8a0111-e8e6-4c26-a91c-5069cbc6b1ca/Patient/"+$("#name").val());
+          
+          
+        }, function(){ alert("error") })
+  }
+
+  
+  </script>
+  </body>
+  </html>
+  

@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+  <body>
+    <script src='js/fhir-client.js'></script>
+    <script>
+      FHIR.oauth2.authorize({
+        'client_id': '62a7323d-7164-4cd7-a417-ffbc496fe831',
+        'scope':  'user/Patient.read user/Patient.write',
+        'redirect_uri': 'http://localhost/lohithcerner/app.html'
+      });
+    </script>
+    <div>Trying to launch.html ...</div>
+  </body>
+</html>
+

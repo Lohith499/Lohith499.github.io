@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+  <head>
+
+    <script src="js/jquery.js"></script>
+    <link rel="stylesheet" href="css/bootstrap.min.css">       
+        
+</head>
+
+<body class="text-center">
+
+    <div class="cover-container d-flex h-100 p-3 mx-auto flex-column">
+      <main role="main" class="inner cover">
+        <h1 class="cover-heading">Example FHIR App</h1>
+        <p class="lead"><br/>Click the button to try out<br><br></p>
+        <p class="lead">
+          <button class="btn btn-warning btn-large" id="login">Login</button>
+        </p>
+      </main>
+    </div>
+
+  <script>
+
+  $(document).ready(function(){
+
+    $("body").on("click", "#login", function(){
+      var iss = "https://fhir-ehr.sandboxcerner.com/dstu2/0b8a0111-e8e6-4c26-a91c-5069cbc6b1ca"
+      window.location ="launch.html?iss="+iss+"&aud="
+    })
+
+  })
+
+  </script>
+
+  </body>
+</html>

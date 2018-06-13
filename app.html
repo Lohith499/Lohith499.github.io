@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Example FHIR App Redirected</title>
+    
+    <script src="js/jquery.js"></script>
+    <script src="js/underscore.js"></script>
+    <script src="js/fhir-client.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script src="js/script.js"></script>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/main.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+      
+      html {box-sizing: border-box;}
+      *, *:before, *:after {box-sizing: inherit;}
+      footer{position:fixed; bottom:0.5vw; right:0.5vw;}
+
+    </style>
+
+
+  </head>
+  <body>
+
+  <div id="main" class="container"></div>
+  </br>
+  </br>
+  </br>
+  <div id="main2" class="container1"></div>
+  
+  <a href="another.html">Visit W3Schools.com!</a>
+  <div><div> Enter Name</div><input id="name" type="text" name="firstname" value=""> </div>
+  <button id="btnSubmit">Get External Content</button>
+  <script>
+
+    var myApp = {}
+	
+    $("#btnSubmit").click(function(){
+               
+        getFHIR()
+        
+        
+    }); 
+    
+    function getFHIR(){
+        FHIR.oauth2.ready(function (fhirClient) {
+        	
+        	console.log(fhirClient.tokenResponse.access_token);
+        	console.log(fhirClient);
+            myApp.smart = fhirClient;
+            
+            $("#main2").html("Access_token:"+fhirClient.tokenResponse.access_token+" ")
+            console.log("Authorization': Bearer"+" "+fhirClient.tokenResponse.access_token);
+            console.log("https://fhir-ehr.sandboxcerner.com/dstu2/0b8a0111-e8e6-4c26-a91c-5069cbc6b1ca/Patient/"+$("#name").val());
+            render(fhirClient)
+            
+          }, function(){ alert("error") })
+    }
+
+    
+    
+    function render(data){
+    	
+    	$.ajax({
+            url: 'https://fhir-ehr.sandboxcerner.com/dstu2/0b8a0111-e8e6-4c26-a91c-5069cbc6b1ca/Patient?name='+$("#name").val(),
+            type: 'GET',
+            dataType: 'json',
+            headers: {
+                'Accept': 'application/json+fhir',
+                'Content-Type': 'application/json+fhir',
+                'Authorization': 'Bearer'+" "+data.tokenResponse.access_token
+            },
+            success: function (result) {
+            	console.log("Member response");
+            	var count = result.total;
+            	var i = 0;
+            	console.log("Members ="+count);
+            	var entries = result.entry;
+            	var members ="";
+            	$.each(entries, function (index, value) {
+            		var name = result.entry[i].resource.name[0].text;
+            		//console.log(result.entry[i].resource.name[0].text);
+            		//console.log('<button id="button'+i+'" type="button" class="btn btn-primary" data-toggle="collapse" data-target="#demo'+i+'"><span class="glyphicon glyphicon-collapse-down"></span>'+name+'</button> </br>');
+            		var button1= '<button id="button'+i+'" type="button" class="btn btn-primary" data-toggle="collapse" data-target="#demo'+i+'"><span class="glyphicon glyphicon-collapse-down"></span>'+name+'</button> </br>';
+            		var blockresult = button1+'<div id="demo'+i+'" class="collapse">';
+            		blockresult +=result.entry[i].resource.text.div;
+            		blockresult +='</div>';
+            		console.log(blockresult);
+            		members +=blockresult;
+            		//members +=result.entry[i].resource.text.div;
+            		
+            		i = i+1;
+            		  // Will stop running after "three"
+            		  return (i !== count-1);
+            		//members +=result.entry[i].resource.text.div;
+            		
+            		});
+            	//console.log(members);
+            	
+            	$("#main2").html(members)
+            	console.log("End Member response");
+
+            },
+            error: function (error) {
+            	console.log("Error Member response");
+            }
+        });
+        
+       }
+
+  </script>
+
+
+
+  </body>
+</html>
