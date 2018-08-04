@@ -1,119 +1,1374 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Example FHIR App Redirected</title>
-    
-    <script src="js/jquery.js"></script>
-    <script src="js/underscore.js"></script>
-    <script src="js/fhir-client.js"></script>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-    <script src="js/script.js"></script>
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/main.css">
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-    <link rel="stylesheet" href="style.css">
-    <style>
+   <head>
+      <title>Provider App on Cerner</title>
+      <script src="js/underscore.js"></script>
+      <script src="js/fhir-client.js"></script>
+      <script
+         src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+      <script src="js/script.js"></script>
+      <!-- Form UI -->
+      <link rel="stylesheet" type="text/css"
+         href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+      <script
+         src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+      <link rel="stylesheet" type="text/css"
+         href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
+      <!-- For Dropdown    -->
+      <!-- Latest compiled and minified CSS -->
+      <link rel="stylesheet"
+         href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/css/bootstrap-select.min.css">
+      <!-- Latest compiled and minified JavaScript -->
+      <script
+         src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/js/bootstrap-select.min.js"></script>
+      <!-- For Calendar -->
+      <!-- Isolated Version of Bootstrap, not needed if your site already uses Bootstrap -->
+      <link rel="stylesheet"
+         href="https://formden.com/static/cdn/bootstrap-iso.css" />
+      <!-- Bootstrap Date-Picker Plugin -->
+      <script type="text/javascript"
+         src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
+      <link rel="stylesheet"
+         href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css" />
+      <!-- For Calendar -->
       
-      html {box-sizing: border-box;}
-      *, *:before, *:after {box-sizing: inherit;}
-      footer{position:fixed; bottom:0.5vw; right:0.5vw;}
+      
+       <!-- For Dropdown -->
+      <link rel="stylesheet" href="css/Dropdown_style.css">
+	 
+	 <script src="js/choosen.js"></script>
 
-    </style>
 
-
-  </head>
-  <body>
-
-  <div id="main" class="container"></div>
-  </br>
-  </br>
-  </br>
-  <div id="main2" class="container1"></div>
+      <script>
+         $(document).ready(
+         		function() {
+         			$('#example').DataTable({
+         				"pagingType" : "full_numbers"
+         			});
+         			$('#example1').DataTable({
+         				"pagingType" : "full_numbers"
+         			});
+         			var date_input = $('input[name="date"]'); //our date input has the name "date"
+         			var container = $('.bootstrap-iso form').length > 0 ? $(
+         					'.bootstrap-iso form').parent() : "body";
+         			date_input.datepicker({
+         				format : 'yyyy-mm-dd',
+         				container : container,
+         				todayHighlight : true,
+         				autoclose : true,
+         			});
+         			document.getElementById("tdiv").style.display = "none";
+         			document.getElementById("tdiv1").style.display = "none";
+         			$("#datepicker").datepicker({ maxDate: new Date, minDate: new Date(2007, 6, 12) });
+         			 $(".chosen").chosen();
+         		});
+         $(function(){
+        	    $('#fdatepicker').datepicker({
+        	        format: 'yyyy-mm-dd',
+        	        endDate: '+0d',
+        	        autoclose: true
+        	    });
+        	});
+      </script>
+      <style>
+         #tdiv {
+         border: 1px solid black;
+         background-color: #d9ffb3;
+         padding-top: 50px;
+         padding-right: 30px;
+         padding-bottom: 50px;
+         padding-left: 30px;
+         }
+         
+         #tdiv1 {
+         border: 1px solid black;
+         background-color: #d9ffb3;
+         padding-top: 50px;
+         padding-right: 30px;
+         padding-bottom: 50px;
+         padding-left: 30px;
+         }
+      </style>
+      <style>
+         body {
+         background: #f39c12;
+         }
+         .center-on-page {
+         position: absolute;
+         top: 50%;
+         left: 50%;
+         transform: translate(-50%, -50%);
+         }
+         h1 {
+         text-align: center;
+         }
+         /* Reset Select */
+         select {
+         -webkit-appearance: none;
+         -moz-appearance: none;
+         -ms-appearance: none;
+         appearance: none;
+         outline: 0;
+         box-shadow: none;
+         border: 0 !important;
+         background: #2c3e50;
+         background-image: none;
+         }
+         /* Custom Select */
+         .select {
+         position: relative;
+         display: block;
+         width: 20em;
+         height: 3em;
+         line-height: 3;
+         background: #2c3e50;
+         overflow: hidden;
+         border-radius: .25em;
+         }
+         select {
+         width: 100%;
+         height: 100%;
+         margin: 0;
+         padding: 0 0 0 .5em;
+         color: #fff;
+         cursor: pointer;
+         }
+         select::-ms-expand {
+         display: none;
+         }
+         /* Arrow */
+         .select::after {
+         content: '\25BC';
+         position: absolute;
+         top: 0;
+         right: 0;
+         bottom: 0;
+         padding: 0 1em;
+         background: #34495e;
+         pointer-events: none;
+         }
+         /* Transition */
+         .select:hover::after {
+         color: #f39c12;
+         }
+         .select::after {
+         -webkit-transition: .25s all ease;
+         -o-transition: .25s all ease;
+         transition: .25s all ease;
+         }
+         #loading-image {
+         display: block;
+         margin: 0 auto;
+         }
+         #loading-image1 {
+         display: block;
+         margin: 0 auto;
+         }
+		.center {
+		    margin: auto;
+		    width: 25%;
+		    padding: 30px;
+		}
+      </style>
+   </head>
+  <!-- *******************************Body******************************* --> 
+   
+   <body>
+      <img src="images/Header_logo.jpg" width="100%" height="125px">
+      </br>
+      </br>
+      <table style="width: 100%;" border="1">
+         <tbody>
+            <tr style="height: 221px;" border="1">
+               <td
+                  style="width: 50%; height: 221px; vertical-align: top; text-align: left; padding-top: 20px;"
+                  border="1">
+                  <div>
+                     <legend>Search Patient</legend>
+                     <table
+                        style="width: auto; height: auto; border-collapse: separate; border-spacing: 1em;">
+                        <tr style="padding-bottom: 5px;">
+                           <td style="padding-right: 8px;"><label
+                              for="text-1532831549747" class="fb-text-label">Enter
+                              Name<span class="fb-required">*</span>
+                              </label>
+                           </td>
+                           <td style="padding-right: 8px;"><input id="name"
+                              type="text" name="firstname" value=""></td>
+                           <td>
+                              <a href="#" id="btnSubmit" class="btn btn-success">Search
+                              by Patient Name</a>
+                              <spam class="error">
+                                 <font id="test1" color="red"></font>
+                              </spam>
+                           </td>
+                        </tr>
+                        <tr>
+                        </tr>
+                        <tr style="padding-bottom: 5px;">
+                           <td><label for="text-1532831549747" class="fb-text-label">Enter
+                              Patient ID<span class="fb-required">*</span>
+                              </label>
+                           </td>
+                           <td><input id="nameID" type="text" name="firstname"
+                              value=""></td>
+                           <td>
+                              <a href="#" id="btnSubmitID" class="btn btn-success">Search
+                              by Patient ID</a>
+                              <spam class="error">
+                                 <font id="test2" color="red"></font>
+                              </spam>
+                           </td>
+                        </tr>
+                     </table>
+                  </div>
+               </td>
+               <td	style="width: 50%; height: 221px; vertical-align: top; text-align: left; padding-top: 20px;" border="1">
+                  <legend>Create Patient</legend>
+                  <div style="width: 100%; height: 100%;">
+                  <div class="center">
+  					      <button id="btnFormCreate" class="btn btn-success">Create Patient</button>
+				 </div>
+				</div>
+               </td>
+            </tr>
+         </tbody>
+      </table>
+                  
+                  
+     
+      
+      
+      <div id="rendered-form" style="display: none;">
+         <form class="form-horizontal">
+            <fieldset>
+               <!-- Form Name -->
+               <legend>Create Patient</legend>
+               <!-- Text input-->
+               <div class="form-group">
+                  <label class="col-sm-1 control-label" for="FirstName">First
+                  Name</label>
+                  <div class="col-sm-4">
+                     <input id="lFirstName" name="FirstName" type="text"
+                        placeholder="FirstName" maxlength="255"
+                        class="form-control input-md" required="true">
+                  </div>
+                  <!-- Text input-->
+                  <label class="col-sm-1 control-label" for="LastName">Last
+                  Name</label>
+                  <div class="col-sm-4">
+                     <input id="lLastName" name="LastName" type="text"
+                        placeholder="LastName" maxlength="255"
+                        class="form-control input-md">
+                  </div>
+               </div>
+            </fieldset>
+         </form>
+         <form class="form-horizontal">
+            <fieldset>
+               <!-- Text input-->
+               <div class="form-group">
+                  <label class="col-sm-2 control-label" for="gender">Gender</label>
+                  <div class="col-sm-6">
+                     <div class="select">
+                        <select name="slct" id="lGender">
+                           <option value="male">Male</option>
+                           <option value="female">Female</option>
+                        </select>
+                     </div>
+                  </div>
+               </div>
+            </fieldset>
+         </form>
+         <form class="form-horizontal">
+            <fieldset>
+               <!-- Text input-->
+               <div class="form-group">
+                  <label class="col-sm-2 control-label" for="date">Birth Date</label>
+                  <div class="col-sm-6">
+                     <input class="form-control" id="date" name="date"
+                        placeholder="MM/DD/YYY" type="text" />
+                  </div>
+               </div>
+            </fieldset>
+         </form>
+         <form class="form-horizontal">
+            <fieldset>
+               <!-- Text input-->
+               <div class="form-group">
+                  <label class="col-sm-2 control-label" for="PhoneNumber">Phone
+                  Number</label>
+                  <div class="col-sm-6">
+                     <input id="lPhoneNumber" name="PhoneNumber" type="text"
+                        minlength="10" maxlength="10" placeholder="placeholder"
+                        class="form-control input-md">
+                  </div>
+               </div>
+            </fieldset>
+         </form>
+         <div class="form-group">
+            <label class="col-sm-2 control-label" for="Address">Address
+            Info</label>
+            <div class="col-sm-12">
+               </br>
+               <form class="form-horizontal">
+                  <fieldset>
+                     <!-- Text input-->
+                     <div class="form-group">
+                        <label class="col-sm-2 control-label" for="AddressLine1">Address
+                        Line1</label>
+                        <div class="col-sm-4">
+                           <input id="lAddressLine1" name="AddressLine1" type="text"
+                              placeholder="Address Line1" maxlength="255"
+                              class="form-control input-md" required="true">
+                        </div>
+                        <!-- Text input-->
+                        <label class="col-sm-2 control-label" for="AddressLine2">Address
+                        Line2</label>
+                        <div class="col-sm-4">
+                           <input id="lAddressLine2" name="AddressLine2" type="text"
+                              placeholder="Address Line2" maxlength="255"
+                              class="form-control input-md">
+                        </div>
+                     </div>
+                  </fieldset>
+               </form>
+               <form class="form-horizontal">
+                  <fieldset>
+                     <!-- Text input-->
+                     <div class="form-group">
+                        <label class="col-sm-2 control-label" for="City">City</label>
+                        <div class="col-sm-4">
+                           <input id="lCity" name="City" type="text" placeholder="City"
+                              maxlength="255" class="form-control input-md" required="true">
+                        </div>
+                        <!-- Text input-->
+                        <label class="col-sm-2 control-label" for="District">District</label>
+                        <div class="col-sm-4">
+                           <input id="lDistrict" name="District" type="text"
+                              placeholder="District" maxlength="255"
+                              class="form-control input-md">
+                        </div>
+                     </div>
+                  </fieldset>
+               </form>
+               <form class="form-horizontal">
+                  <fieldset>
+                     <!-- Text input-->
+                     <div class="form-group">
+                        <label class="col-sm-2 control-label" for="gender">State</label>
+                        <div class="col-sm-6">
+                           <div class="select">
+                              <select name="slct" id="lState">
+                                 <option>Choose Your State</option>
+                                 <option value="AL">Alabama</option>
+                                 <option value="AK">Alaska</option>
+                                 <option value="AZ">Arizona</option>
+                                 <option value="AR">Arkansas</option>
+                                 <option value="CA">California</option>
+                                 <option value="CO">Colorado</option>
+                                 <option value="CT">Connecticut</option>
+                                 <option value="DE">Delaware</option>
+                                 <option value="DC">District of Columbia</option>
+                                 <option value="FL">Florida</option>
+                                 <option value="GA">Georgia</option>
+                                 <option value="HI">Hawaii</option>
+                                 <option value="ID">Idaho</option>
+                                 <option value="IL">Illinois</option>
+                                 <option value="IN">Indiana</option>
+                                 <option value="IA">Iowa</option>
+                                 <option value="KS">Kansas</option>
+                                 <option value="KY">Kentucky</option>
+                                 <option value="LA">Louisiana</option>
+                                 <option value="ME">Maine</option>
+                                 <option value="MD">Maryland</option>
+                                 <option value="MA">Massachusetts</option>
+                                 <option value="MI">Michigan</option>
+                                 <option value="MN">Minnesota</option>
+                                 <option value="MS">Mississippi</option>
+                                 <option value="MO">Missouri</option>
+                                 <option value="MT">Montana</option>
+                                 <option value="NE">Nebraska</option>
+                                 <option value="NV">Nevada</option>
+                                 <option value="NH">New Hampshire</option>
+                                 <option value="NJ">New Jersey</option>
+                                 <option value="NM">New Mexico</option>
+                                 <option value="NY">New York</option>
+                                 <option value="NC">North Carolina</option>
+                                 <option value="ND">North Dakota</option>
+                                 <option value="OH">Ohio</option>
+                                 <option value="OK">Oklahoma</option>
+                                 <option value="OR">Oregon</option>
+                                 <option value="PA">Pennsylvania</option>
+                                 <option value="RI">Rhode Island</option>
+                                 <option value="SC">South Carolina</option>
+                                 <option value="SD">South Dakota</option>
+                                 <option value="TN">Tennessee</option>
+                                 <option value="TX">Texas</option>
+                                 <option value="UT">Utah</option>
+                                 <option value="VT">Vermont</option>
+                                 <option value="VA">Virginia</option>
+                                 <option value="WA">Washington</option>
+                                 <option value="WV">West Virginia</option>
+                                 <option value="WI">Wisconsin</option>
+                                 <option value="WY">Wyoming</option>
+                              </select>
+                           </div>
+                        </div>
+                     </div>
+                  </fieldset>
+               </form>
+               <form class="form-horizontal">
+                  <fieldset>
+                     <!-- Text input-->
+                     <div class="form-group">
+                        <label class="col-sm-2 control-label" for="ZipCode">ZipCode</label>
+                        <div class="col-sm-2">
+                           <input id="lZipCode" name="ZipCode" type="text" minlength="5"
+                              maxlength="5" placeholder="5 Digit Zip Code"
+                              class="form-control input-md">
+                        </div>
+                     </div>
+                  </fieldset>
+               </form>
+            </div>
+         </div>
+         <div class="text-center">
+            <a href="#" id="bPatientSubmit" class="btn btn-success">Submit</a> <a
+               href="#" id="bPatientCancel" class="btn btn-danger">Cancel</a>
+         </div>
+      </div>
+      
+      
+      
+      <!-- Patient Details -->
+      <div id="main2" class="container1" style="display :none;">
+      <div id="main211" class="container1" style="padding: 20px;">
+         <table style="width: 100%;" border="1">
+            <tbody>
+               <tr style="height: 221px;" border="1">
+                  <td style="width:25%; height: 221px;" border="1">
+                     <div
+                        id="main21" style=""></div>
+                  </td>
+                  <td style="width: 100%; height: 221px;" border="1">
+                  	<table style="width: 100%;">
+            			<tbody>
+            			<tr style="height: auto;">
+            			<!-- <h4 style="height: auto;">Patient Condition</h4> -->
+            			<legend>Patient Condition</legend>
+            			</tr>
+              			 <tr style="height: 221px;">
+               			    <td	style="width: 50%; height: 200px; vertical-align: top; text-align: left;" border="1">
+			                  <div style="width: 100%; height: auto;">
+			                  		<div class="">
+			  					      <button id="btnFormCreate" class="btn btn-success" onclick="ViewConditions()">View Condition</button>
+							 		</div>
+							  </div>
+							  <div style="width: 100%; height: 10px;"></div>
+							  <div style="width: 100%; height: auto;">
+			                  	<div class="">
+			  					      <button id="btnFormCreate" class="btn btn-success" onclick="CreateConditions()">Create Condition</button>
+							 	</div>
+							 </div>
+			               </td>
+			               <td	style="width: 50%; height: 200px; vertical-align: top; text-align: left; padding-top: 20px;" >
+			               </td>
+               			 </tr>
+               			</tbody>
+               		</table> 
+                  </td>
+               </tr>
+            </tbody>
+         </table>
+      </div>
+      </div>
+     
+      </br>
   
-  <a href="another.html">Visit W3Schools.com!</a>
-  <div><div> Enter Name</div><input id="name" type="text" name="firstname" value=""> </div>
-  <button id="btnSubmit">Get External Content</button>
-  <script>
-
-    var myApp = {}
-	
-    $("#btnSubmit").click(function(){
-               
-        getFHIR()
+        <!-- Patient List table -->            
+      <div class="row1"  style="display:block;">
+         <div id="tdiv" class="span12">
+          <legend>Patients List</legend>
+            <img id="loading-image" src="images/loading.gif" width="135px"
+               height="55px">
+            <table id="example" class="table table-striped table-bordered"
+               style="">
+               <thead>
+                  <tr>
+                     <th>ID</th>
+                     <th>Name</th>
+                     <th>Gender</th>
+                     <th>BirthDate</th>
+                     <th>Telecom</th>
+                     <th>Address</th>
+                  </tr>
+               </thead>
+               <tbody>
+               </tbody>
+               <tfoot>
+                  <tr>
+                     <th>ID</th>
+                     <th>Name</th>
+                     <th>Gender</th>
+                     <th>BirthDate</th>
+                     <th>Telecom</th>
+                     <th>Address</th>
+                  </tr>
+               </tfoot>
+            </table>
+         </div>
+      </div>
+      
+      <!-- Condition List table -->
+      <div class="row2" id="trow1" "display:block;">
+         <div id="tdiv1" class="span12">
+         <legend>Conditions List</legend>
+            <img id="loading-image1" src="images/loading.gif" width="135px"
+               height="55px">
+            <table id="example1" class="table table-striped table-bordered"
+               style="">
+               <thead>
+                  <tr>
+                     <th>ID</th>
+                     <th>Asserter</th>
+                     <th>Code</th>
+                     <th>Category</th>
+                     <th>ClinicalStatus</th>
+                     <th>VerificationStatus</th>
+                     <th>Notes</th>
+                  </tr>
+               </thead>
+               <tbody>
+               </tbody>
+               <tfoot>
+                  <tr>
+                     <th>ID</th>
+                     <th>Asserter</th>
+                     <th>Code</th>
+                     <th>Category</th>
+                     <th>ClinicalStatus</th>
+                     <th>VerificationStatus</th>
+                     <th>Notes</th>
+                  </tr>
+               </tfoot>
+            </table>
+         </div>
+      </div>
+      
+      
+      <!-- Condition Form -->
+      <div class="row2" id="trow2"  style="width:700px;display:none;">
+         
+         
+         <div id="rendered-form1" style="display: block;">
+         
+         <form class="form-horizontal">
+            <fieldset>
+               <!-- Form Name -->
+               <legend>Create Condition</legend>
+            </fieldset>
+         </form>
+         <form class="form-horizontal">
+            <fieldset>
+               <!-- Text input-->
+               <div class="form-group">
+                  <label class="col-sm-2 control-label" for="gender">Code</label>
+                  <div class="col-sm-6">
+                     <div style="width:700px;margin:0px auto;">
+						<select class="chosen" id="lCode" style="width:500px;">
+						<option value="109006&Anxiety disorder of childhood OR adolescence (disorder)">109006  Anxiety disorder of childhood OR adolescence (disorder)</option>
+						<option value="122003&Choroidal hemorrhage (disorder)">122003  Choroidal hemorrhage (disorder)</option>
+						<option value="127009&Miscarriage with tear of cervix">127009  Miscarriage with tear of cervix</option>
+						<option value="129007&Homoiothermia (finding)">129007  Homoiothermia (finding)</option>
+						<option value="134006&Decreased hair growth (finding)">134006  Decreased hair growth (finding)</option>
+						<option value="140004&Chronic pharyngitis (disorder)">140004  Chronic pharyngitis (disorder)</option>
+						<option value="144008&Normal peripheral vision (finding)">144008  Normal peripheral vision (finding)</option>
+						<option value="147001&Superficial foreign body of scrotum without major open wound but with infection (disorder)">147001  Superficial foreign body of scrotum without major open wound but with infection (disorder)</option>
+						<option value="150003&Abnormal bladder continence (finding)">150003  Abnormal bladder continence (finding)</option>
+						<option value="151004&Gonococcal meningitis (disorder)">151004  Gonococcal meningitis (disorder)</option>
+						<option value="162004&Severe manic bipolar I disorder without psychotic features (disorder)">162004  Severe manic bipolar I disorder without psychotic features (disorder)</option>
+						<option value="165002&Accident prone (finding)">165002  Accident prone (finding)</option>
+						<option value="168000&Typhlolithiasis (disorder)">168000  Typhlolithiasis (disorder)</option>
+						<option value="171008&Injury of ascending right colon without open wound into abdominal cavity (disorder)">171008  Injury of ascending right colon without open wound into abdominal cavity (disorder)</option>
+						<option value="172001&Endometritis following molar AND/OR ectopic pregnancy (disorder)">172001  Endometritis following molar AND/OR ectopic pregnancy (disorder)</option>
+						<option value="175004&Supraorbital neuralgia (disorder)">175004  Supraorbital neuralgia (disorder)</option>
+						<option value="177007&Poisoning by sawfly larvae (disorder)">177007  Poisoning by sawfly larvae (disorder)</option>
+						<option value="179005&Apraxia of dressing (finding)">179005  Apraxia of dressing (finding)</option>
+						<option value="181007&Hemorrhagic bronchopneumonia (disorder)">181007  Hemorrhagic bronchopneumonia (disorder)</option>
+						<option value="183005&Autoimmune pancytopenia (disorder)">183005  Autoimmune pancytopenia (disorder)</option>
+						<option value="184004&Withdrawal arrhythmia (disorder)">184004  Withdrawal arrhythmia (disorder)</option>
+						<option value="188001&Injury of intercostal artery (disorder)">188001  Injury of intercostal artery (disorder)</option>
+						<option value="192008&Congenital syphilitic hepatomegaly (disorder)">192008  Congenital syphilitic hepatomegaly (disorder)</option>
+						<option value="193003&Benign hypertensive renal disease (disorder)">193003  Benign hypertensive renal disease (disorder)</option>
+						<option value="195005&Illegal abortion with endometritis (disorder)">195005  Illegal abortion with endometritis (disorder)</option>
+						<option value="198007&Disease due to Filoviridae (disorder)">198007  Disease due to Filoviridae (disorder)</option>
+						<option value="199004&Decreased lactation">199004  Decreased lactation</option>
+						<option value="208008&Neurocutaneous melanosis sequence (disorder)">208008  Neurocutaneous melanosis sequence (disorder)</option>
+						<option value="216004&Delusion of persecution (finding)">216004  Delusion of persecution (finding)</option>
+						<option value="219006&Current drinker of alcohol (finding)">219006  Current drinker of alcohol (finding)</option>
+						<option value="222008&Acute epiglottitis with obstruction (disorder)">222008  Acute epiglottitis with obstruction (disorder)</option>
+						<option value="223003&Tumor of body of uterus affecting pregnancy (disorder)">223003  Tumor of body of uterus affecting pregnancy (disorder)</option>
+						
+						
+						</select>
+						</div>
+                  </div>
+               </div>
+            </fieldset>
+         </form>
+         <form class="form-horizontal">
+            <fieldset>
+               <!-- Text input-->
+               <div class="form-group">
+                  <label class="col-sm-2 control-label" for="gender">Category </label>
+                  <div class="col-sm-6">
+                     <div class="select">
+                        <select name="slct" id="lCategory">
+                           <option value="problem&Problem">Problem</option>
+                           <option value="health-concern&Health Concern">Health Concern</option>
+                        </select>
+                     </div>
+                  </div>
+               </div>
+            </fieldset>
+         </form>
+         <form class="form-horizontal">
+            <fieldset>
+               <!-- Text input-->
+               <div class="form-group">
+                  <label class="col-sm-2 control-label" for="gender">Clinical Status</label>
+                  <div class="col-sm-6">
+                     <div class="select">
+                        <select name="slct" id="lClinicalStatus">
+                           <option value="active">Active</option>
+                           <option value="relapse">Relapse</option>
+                           <option value="remission">Remission</option>
+                           <option value="resolved">Resolved</option>
+                        </select>
+                     </div>
+                  </div>
+               </div>
+            </fieldset>
+         </form>
+         <form class="form-horizontal">
+            <fieldset>
+               <!-- Text input-->
+               <div class="form-group">
+                  <label class="col-sm-2 control-label" for="gender">Verification Status </label>
+                  <div class="col-sm-6">
+                     <div class="select">
+                        <select name="slct" id="lVerificationStatus">
+                           <option value="provisional&Provisional">Provisional</option>
+                           <option value="differential&Differential">Differential</option>
+                           <option value="confirmed&Confirmed">Confirmed</option>
+                           <option value="refuted&Refuted">Refuted</option>
+                           <option value="entered-in-error&Entered In Error">Entered-in-error</option>
+                           <option value="unknown&Unknown">Unknown</option>
+                        </select>
+                     </div>
+                  </div>
+               </div>
+            </fieldset>
+         </form>
+     	 
+     	 
+     	 <form class="form-horizontal">
+            <fieldset>
+               <!-- Text input-->
+               <div class="form-group">
+                  <label class="col-sm-2 control-label" for="gender">Abatement Date</label>
+                  <div class="col-sm-6">
+                   <input type="text" id="fdatepicker">
+                      
+                  </div>
+               </div>
+            </fieldset>
+         </form>
+         
+     	 <form class="form-horizontal">
+            <fieldset>
+               <!-- Text input-->
+               <div class="form-group">
+                  <label class="col-sm-2 control-label" for="gender">Abatement Boolean </label>
+                  <div class="col-sm-6">
+                     <div class="select">
+                        <select name="slct" id="lAbatementboolean">
+                           <option value="true">True</option>
+                           <option value="false">False</option>
+                        </select>
+                     </div>
+                  </div>
+               </div>
+            </fieldset>
+         </form>
         
+         
+         <form class="form-horizontal">
+            <fieldset>
+               <!-- Text input-->
+               <div class="form-group">
+                  <label class="col-sm-2 control-label" for="Notes">Notes</label>
+                  <div class="col-sm-6">
+                  <textarea id="lNotes" name="Notes" type="textarea"
+                         maxlength="500" placeholder="Enter Notes" class="form-control rounded-0" id="exampleFormControlTextarea2" rows="3"></textarea>
+                  </div>
+               </div>
+            </fieldset>
+         </form>
+         <div class="text-center">
+            <a href="#" id="bPatientSubmit" class="btn btn-success" onclick="postConditions()">Submit</a> 
+            <a href="#" id="bPatientCancel" class="btn btn-danger">Cancel</a>
+         </div>
+         
+         
+         </div>
         
-    }); 
-    
-    function getFHIR(){
-        FHIR.oauth2.ready(function (fhirClient) {
-        	
-        	console.log(fhirClient.tokenResponse.access_token);
-        	console.log(fhirClient);
-            myApp.smart = fhirClient;
-            
-            $("#main2").html("Access_token:"+fhirClient.tokenResponse.access_token+" ")
-            console.log("Authorization': Bearer"+" "+fhirClient.tokenResponse.access_token);
-            console.log("https://fhir-ehr.sandboxcerner.com/dstu2/0b8a0111-e8e6-4c26-a91c-5069cbc6b1ca/Patient/"+$("#name").val());
-            render(fhirClient)
-            
-          }, function(){ alert("error") })
-    }
-
-    
-    
-    function render(data){
-    	
-    	$.ajax({
-            url: 'https://fhir-ehr.sandboxcerner.com/dstu2/0b8a0111-e8e6-4c26-a91c-5069cbc6b1ca/Patient?name='+$("#name").val(),
-            type: 'GET',
-            dataType: 'json',
-            headers: {
-                'Accept': 'application/json+fhir',
-                'Content-Type': 'application/json+fhir',
-                'Authorization': 'Bearer'+" "+data.tokenResponse.access_token
-            },
-            success: function (result) {
-            	console.log("Member response");
-            	var count = result.total;
-            	var i = 0;
-            	console.log("Members ="+count);
-            	var entries = result.entry;
-            	var members ="";
-            	$.each(entries, function (index, value) {
-            		var name = result.entry[i].resource.name[0].text;
-            		//console.log(result.entry[i].resource.name[0].text);
-            		//console.log('<button id="button'+i+'" type="button" class="btn btn-primary" data-toggle="collapse" data-target="#demo'+i+'"><span class="glyphicon glyphicon-collapse-down"></span>'+name+'</button> </br>');
-            		var button1= '<button id="button'+i+'" type="button" class="btn btn-primary" data-toggle="collapse" data-target="#demo'+i+'"><span class="glyphicon glyphicon-collapse-down"></span>'+name+'</button> </br>';
-            		var blockresult = button1+'<div id="demo'+i+'" class="collapse">';
-            		blockresult +=result.entry[i].resource.text.div;
-            		blockresult +='</div>';
-            		console.log(blockresult);
-            		members +=blockresult;
-            		//members +=result.entry[i].resource.text.div;
-            		
-            		i = i+1;
-            		  // Will stop running after "three"
-            		  return (i !== count-1);
-            		//members +=result.entry[i].resource.text.div;
-            		
-            		});
-            	//console.log(members);
-            	
-            	$("#main2").html(members)
-            	console.log("End Member response");
-
-            },
-            error: function (error) {
-            	console.log("Error Member response");
-            }
-        });
-        
-       }
-
-  </script>
-
-
-
-  </body>
+      </div>
+      
+      
+      
+ <!-- *******************************Body*******************************  -->     
+      
+      
+      <script>
+     
+         var myApp = {};
+         var mpatientID = "";
+         var mconditionID = "";
+         //patient search using name
+         $("#btnSubmit").click(function() {
+         	var firstName = document.getElementById("name").value;
+         	mpatientID = firstName;
+         	if (firstName.length > 1) {
+         		$("#test1").text("");
+         		getFHIR()
+         	} else {
+         		$("#test1").text("Enter Patient Name!");
+         	}
+         });
+         //patient search using Id
+         $("#btnSubmitID").click(function() {
+         	var firstName = document.getElementById("nameID").value;
+         	mpatientID = firstName;
+         	if (firstName.length > 1) {
+         		$("#test2").text("");
+         		getFHIRID()
+         	} else {
+         		$("#test2").text("Enter Patient ID!");
+         	}
+         });
+         
+         $("#btnFormCreate").click(function() {
+         	document.getElementById("rendered-form").style.display = "block";
+         	document.getElementById("btnFormCreate").style.display = "none";
+         	$("#main2").html("");
+         });
+         
+         $("#bPatientCancel").click(function() {
+         	document.getElementById("rendered-form").style.display = "none";
+         	document.getElementById("btnFormCreate").style.display = "block";
+         	$("#main2").html("");
+         });
+         
+         $("#bPatientSubmit").click(function() {
+         	document.getElementById("rendered-form").style.display = "none";
+         	document.getElementById("btnFormCreate").style.display = "block";
+         	$("#main2").html("");
+         	postFHIR();
+         
+         });
+         
+         function MemberClicked(mID) {
+         
+         	mpatientID = mID;
+         	console.log(mID);
+         	var firstName = mID;
+         	getFHIRID()
+         }
+         
+         
+         function ViewConditions() {
+        	 document.getElementById("trow2").style.display = "none";
+          	document.getElementById("trow1").style.display = "block";
+        	 
+          	
+          	console.log(mpatientID);
+          	getConditions()
+          }
+         
+         function CreateConditions() {
+        	 document.getElementById("trow1").style.display = "none";
+           	document.getElementById("trow2").style.display = "block";
+           	document.getElementById("lCode_chosen").style.width="500px";
+           	console.log(mpatientID);
+           	//postConditions()
+           }
+         
+         
+         
+         function postFHIR() {
+         	FHIR.oauth2.ready(function(fhirClient) {
+         
+         		console.log(fhirClient.tokenResponse.access_token);
+         		console.log(fhirClient);
+         		myApp.smart = fhirClient;
+         
+         		//$("#main2").html("Access_token:" + fhirClient.tokenResponse.access_token+ " ")
+         		console.log("Authorization': Bearer" + " "
+         				+ fhirClient.tokenResponse.access_token);
+         		renderpost(fhirClient)
+         
+         	}, function() {
+         		alert("error")
+         	})
+         }
+         
+         function renderpost(data) {
+         	var createPatient = {
+         		"resourceType" : "Patient",
+         		"identifier" : [ {
+         			"assigner" : {
+         				"reference" : "Organization/619848"
+         			}
+         		} ],
+         		"active" : true,
+         		"name" : [
+         				{
+         					"use" : "official",
+         					"family" : [ $("#lFirstName").val() ],
+         					"given" : [ $("#lFirstName").val(),
+         							$("#lLastName").val() ],
+         					"period" : {
+         						"start" : "2010-05-17T14:54:31.000Z"
+         					}
+         				},
+         				{
+         					"use" : "usual",
+         					"given" : [ $("#lFirstName").val()
+         							+ $("#lLastName").val() ],
+         					"period" : {
+         						"start" : "2012-05-22T15:45:50.000Z"
+         					}
+         				} ],
+         		"telecom" : [ {
+         			"system" : "phone",
+         			"value" : $("#lPhoneNumber").val(),
+         			"use" : "home",
+         			"period" : {
+         				"start" : "2012-05-17T15:33:18.000Z"
+         			}
+         		} ],
+         		"gender" : $("#lGender").val(),
+         		"birthDate" : $("#date").val(),
+         		"address" : [ {
+         			"use" : "home",
+         			"line" : [ $("#lAddressLine1").val(),
+         					$("#lAddressLine2").val() ],
+         			"city" : $("#lCity").val(),
+         			"district" : $("#lDistrict").val(),
+         			"state" : $("#lState").val(),
+         			"postalCode" : $("#lZipCode").val(),
+         			"country" : "United States of America",
+         			"period" : {
+         				"start" : "2012-05-17T15:33:18.000Z"
+         			}
+         		} ],
+         		"maritalStatus" : {
+         			"coding" : [ {
+         				"system" : "http://hl7.org/fhir/v3/NullFlavor",
+         				"code" : "UNK",
+         				"display" : "Unknown"
+         			} ],
+         			"text" : "Unknown"
+         		},
+         		"communication" : [ {
+         			"language" : {
+         				"coding" : [ {
+         					"system" : "urn:ietf:bcp:47",
+         					"code" : "eng",
+         					"display" : "English"
+         				} ],
+         				"text" : "English"
+         			},
+         			"preferred" : true
+         		} ],
+         	};
+         
+         	console.log("JSON createPatient start");
+         	console.log(createPatient);
+         	console.log(JSON.stringify(createPatient));
+         	console.log("JSON createPatient end");
+         	console.log('Bearer' + " " + data.tokenResponse.access_token);
+         
+         	$
+         			.ajax({
+         				url : 'https://fhir-ehr.sandboxcerner.com/dstu2/0b8a0111-e8e6-4c26-a91c-5069cbc6b1ca/Patient',
+         				type : "POST",
+         				data : JSON.stringify(createPatient),
+         				dataType : "text",
+         				headers : {
+         					'Accept' : 'application/json+fhir',
+         					'Content-Type' : 'application/json+fhir',
+         					'Authorization' : 'Bearer' + " "
+         							+ data.tokenResponse.access_token
+         				},
+         				success : function(result, textStatus, jQxhr) {
+         					console.log("Member creation response");
+         					console.log("Member creation response result");
+         					var response_headers = JSON.stringify(jQxhr
+         							.getAllResponseHeaders());
+         					console.log(jQxhr.getResponseHeader('location'));
+         					var locationpatient = jQxhr
+         							.getResponseHeader('location');
+         					locationpatient = locationpatient.split("/");
+         					var patientID = locationpatient[locationpatient.length - 1];
+         					mpatientID = patientID;
+         					//document.getElementById("nameID").value=patientID
+         					//$("#main2").html("<p>Patient has been created </p>");
+         					rendergetbyID(myApp.smart);
+         					console.log("End Member response");
+         				},
+         				error : function(jqXhr, textStatus, errorThrown) {
+         					console.log("Error Member creation");
+         					console.log(jqXhr);
+         					console.log(textStatus);
+         					$("#main2").html(
+         							"<p>Patient creation Failed </p></br>"
+         									+ errorThrown)
+         				}
+         			});
+         }
+         
+         function getFHIR() {
+         	FHIR.oauth2.ready(function(fhirClient) {
+         		console.log(fhirClient.tokenResponse.access_token);
+         		console.log(fhirClient);
+         		mpatientID=$("#name").val();
+         		myApp.smart = fhirClient;
+         		//$("#main2").html("Access_token:" + fhirClient.tokenResponse.access_token+ " ")
+         		console.log("Authorization': Bearer" + " "
+         				+ fhirClient.tokenResponse.access_token);
+         		renderget(fhirClient)
+         	}, function() {
+         		alert("error")
+         	})
+         }
+         
+         function getFHIRID() {
+         	console.log("FhirID");
+         	FHIR.oauth2
+         			.ready(
+         					function(fhirClient) {
+         						console
+         								.log(fhirClient.tokenResponse.access_token);
+         						console.log(fhirClient);
+         						myApp.smart = fhirClient;
+         						// $("#main2").html("Access_token:"+fhirClient.tokenResponse.access_token+" ")
+         						console
+         								.log("Authorization': Bearer"
+         										+ " "
+         										+ fhirClient.tokenResponse.access_token);
+         						console
+         								.log("https://fhir-ehr.sandboxcerner.com/dstu2/0b8a0111-e8e6-4c26-a91c-5069cbc6b1ca/Patient/?name="
+         										+ $("#name").val());
+         						rendergetbyID(fhirClient)
+         
+         					}, function() {
+         						alert("error")
+         					})
+         }
+         
+         function rendergetbyID(data) {
+         	document.getElementById("tdiv").style.display = "none";
+        	document.getElementById("tdiv1").style.display = "none";
+         	
+         	$
+         			.ajax({
+         				url : 'https://fhir-ehr.sandboxcerner.com/dstu2/0b8a0111-e8e6-4c26-a91c-5069cbc6b1ca/Patient/'
+         						+ mpatientID,
+         				//url: 'https://fhir-ehr.sandboxcerner.com/dstu2/0b8a0111-e8e6-4c26-a91c-5069cbc6b1ca/Patient/'+$("#nameID").val(),
+         				type : 'GET',
+         				dataType : 'json',
+         				headers : {
+         					'Accept' : 'application/json+fhir',
+         					'Content-Type' : 'application/json+fhir',
+         					'Authorization' : 'Bearer' + " "
+         							+ data.tokenResponse.access_token
+         				},
+         				success : function(result) {
+         					console.log("Member response");
+         					console.log(result);
+         					var i = 0;
+         					var members = "";
+         					var name = result.text;
+         					//console.log(result.entry[i].resource.name[0].text);
+         					//console.log('<button id="button'+i+'" type="button" class="btn btn-primary" data-toggle="collapse" data-target="#demo'+i+'"><span class="glyphicon glyphicon-collapse-down"></span>'+name+'</button> </br>');
+         					var button1 = '<div style="width:100%;"><div style="width:100%;"> <button id="button'+i+'" type="button" class="btn btn-primary" data-toggle="collapse" data-target="#demo'+i+'">'+ result.name[0].text + '</button> </br>';
+         					var blockresult = button1 + '</div><div id="demo'+i+'" style="width:100%;">';
+         					blockresult += result.text.div;
+         					blockresult += "<p><b>Patient Id</b>: "
+         							+ mpatientID + "</p>'</div> </div>";
+         					console.log(blockresult);
+         					members += blockresult;
+         					$("#main21").html(members)
+         					console.log("End Member response");
+         					document.getElementById("main2").style.display = "block";
+         				},
+         				error : function(error) {
+         					console.log("Error Member response");
+         				}
+         			});
+         
+         }
+         
+         $('#demo0')
+         		.on(
+         				'hide.bs.collapse',
+         				function() {
+         					$('#button0')
+         							.html(
+         									'<span class="glyphicon glyphicon-collapse-down"></span> Show');
+         				});
+         $('#demo0')
+         		.on(
+         				'show.bs.collapse',
+         				function() {
+         					$('#button0')
+         							.html(
+         									'<span class="glyphicon glyphicon-collapse-up"></span> Hide');
+         				});
+         
+         
+         
+         
+         function renderget(data) {
+         	document.getElementById("main2").style.display = "none";
+         	document.getElementById("tdiv1").style.display = "none"
+         	document.getElementById("tdiv").style.display = "block";
+         	document.getElementById("loading-image").style.display = "block";
+         	$('#loading-image').show();
+         	$
+         			.ajax({
+         				url : 'https://fhir-ehr.sandboxcerner.com/dstu2/0b8a0111-e8e6-4c26-a91c-5069cbc6b1ca/Patient?name='
+         						+ mpatientID,
+         				//url: 'https://fhir-ehr.sandboxcerner.com/dstu2/0b8a0111-e8e6-4c26-a91c-5069cbc6b1ca/Patient?name='+$("#name").val(),
+         				type : 'GET',
+         				dataType : 'json',
+         				headers : {
+         					'Accept' : 'application/json+fhir',
+         					'Content-Type' : 'application/json+fhir',
+         					'Authorization' : 'Bearer' + " "
+         							+ data.tokenResponse.access_token
+         				},
+         				success : function(result) {
+         					$('#loading-image').hide();
+         					console.log("Member response");
+         					console.log(result);
+         					var count = result.total;
+         					var i = 0;
+         					var table = $('#example').DataTable();
+         					table.clear().draw();
+							if(count<1){
+          						$('#example').append('<tr class="odd"><td valign="top" colspan="6" class="dataTables_empty">No Member Records Found</td></tr>');
+          						console.log("No Members found quit");
+          						return;
+          					}
+         					console.log("Members =" + count);
+         					var entries = result.entry;
+         					
+         					$
+         							.each(
+         									entries,
+         									function(index, value) {
+         
+         										var name = result.entry[i].resource.name[0].text;
+         										var entry = result.entry[i].resource;
+         										console.log(entry);
+         										//var trow = ttable.insertRow(1);
+         										var tgender = "NULL";
+         										if ('gender' in entry) {
+         											tgender = entry.gender;
+         										}
+         										var tnumber = "NULL";
+         										if ('telecom' in entry) {
+         											tnumber = entry.telecom[0].value;
+         										}
+         										var tbirthdate = "NULL";
+         										if ('birthDate' in entry) {
+         											tbirthdate = entry.birthDate;
+         										}
+         										var taddress = "NULL";
+         										if ('address' in entry) {
+         											taddress = entry.address[0].text;
+         										}
+         										var counter = 1;
+         										var t = $('#example')
+         												.DataTable();
+         										var link = '<a id='
+         												+ entry.id
+         												+ ' class="clickPatient" onclick="MemberClicked('
+         												+ entry.id + ')">'
+         												+ entry.id + '</a>';
+         										t.row
+         												.add(
+         														[
+         																link,
+         																entry.name[0].text,
+         																tgender,
+         																tbirthdate,
+         																tnumber,
+         																taddress ])
+         												.draw(false);
+         										i = i + 1;
+         										// return (i !== count-1);
+         									});
+         					console.log("End Member response");
+         				},
+         				error : function(error) {
+         					$('#loading-image').hide();
+         					console.log("Error Member response");
+         				}
+         			});
+         
+         }
+         
+         
+         
+         function getConditions() {
+          	FHIR.oauth2.ready(function(fhirClient) {
+          
+          		console.log(fhirClient.tokenResponse.access_token);
+          		console.log(fhirClient);
+          		myApp.smart = fhirClient;
+          
+          		//$("#main2").html("Access_token:" + fhirClient.tokenResponse.access_token+ " ")
+          		console.log("Condtion Authorization': Bearer" + " "
+          				+ fhirClient.tokenResponse.access_token);
+          		getFHIRCondtionsData(fhirClient)
+          
+          	}, function() {
+          		alert("error")
+          	})
+          }
+         
+         
+         
+         
+         function postConditions() {
+           	FHIR.oauth2.ready(function(fhirClient) {
+           
+           		console.log(fhirClient.tokenResponse.access_token);
+           		console.log(fhirClient);
+           		myApp.smart = fhirClient;
+           
+           		//$("#main2").html("Access_token:" + fhirClient.tokenResponse.access_token+ " ")
+           		console.log("Condtion Authorization': Bearer" + " "
+           				+ fhirClient.tokenResponse.access_token);
+           		postFHIRCondtionsData(fhirClient)
+           
+           	}, function() {
+           		alert("error")
+           	})
+           }
+         
+         
+         
+         
+         function postFHIRCondtionsData(data) {
+        	 
+        	 
+        	 var mcode=$("#lCode").val();
+        	 var mcodes= mcode.split("&");
+        	 var mcategory=$("#lCategory").val();
+        	 var mcpatient= "Patient/"+mpatientID;
+        	 var mcategorys=mcategory.split("&");
+        	 var mClinicalStatus=$("#lClinicalStatus").val();
+        	 var mVerificationStatus=$("#lVerificationStatus").val().split("&");
+        	 var mlOnSetDateTime=$("#fdatepicker").val()+"T13:13:20-06:00";
+        	 var mAbatementboolean=$("#lAbatementboolean").val();
+        	 var mAbatementDateTime=$("#fdatepicker").val();
+          	var createCondition = {
+          			
+          			  "resourceType": "Condition",
+          			  "patient": {
+          			    "reference": mcpatient
+          			  },
+          			  
+          			  
+          			  "code": {
+          			    "coding": [
+          			      {
+          			        "system": "http://snomed.info/sct",
+          			        "code": mcodes[0],
+          			        "display": mcodes[1],
+          			        "userSelected": true
+          			      }
+          			    ],
+          			    "text": mcodes[1]
+          			  },
+          			 "category": {
+          			    "coding": [
+          			      {
+          			        "system": "http://argonaut.hl7.org",
+          			        "code": "problem",
+          			        "display": "Problem"
+          			      }
+          			    ],
+          			    "text": "Problem"
+          			  },
+          			  "clinicalStatus": mClinicalStatus,
+          			  "verificationStatus": mVerificationStatus[0],
+          			  "abatementDateTime": mAbatementDateTime,
+          			  "notes":$("#lNotes").val()
+          	};
+          
+          	console.log("JSON createCondition start");
+          	console.log(createCondition);
+          	console.log(JSON.stringify(createCondition));
+          	console.log("JSON createCondition end");
+          	console.log('Bearer' + " " + data.tokenResponse.access_token);
+          
+          	$
+          			.ajax({
+          				url : 'https://fhir-ehr.sandboxcerner.com/dstu2/0b8a0111-e8e6-4c26-a91c-5069cbc6b1ca/Condition',
+          				type : "POST",
+          				data : JSON.stringify(createCondition),
+          				dataType : "text",
+          				headers : {
+          					'Accept' : 'application/json+fhir',
+          					'Content-Type' : 'application/json+fhir',
+          					'Authorization' : 'Bearer' + " "
+          							+ data.tokenResponse.access_token
+          				},
+          				success : function(result, textStatus, jQxhr) {
+          					console.log("Condition creation response");
+          					console.log("Condition creation response result");
+          					var response_headers = JSON.stringify(jQxhr
+          							.getAllResponseHeaders());
+          					console.log(jQxhr.getResponseHeader('location'));
+          					var locationpatient = jQxhr
+          							.getResponseHeader('location');
+          					locationpatient = locationpatient.split("/");
+          					var mcondtionID = locationpatient[locationpatient.length - 1];
+          					//rendergetbyID(myApp.smart);
+          					console.log("Success End condition creation response");
+          					document.getElementById("rendered-form1").style.display = "none";
+          					$('#trow2').append("<h4>New condition records has been created with ID="+mcondtionID);
+          				},
+          				error : function(jqXhr, textStatus, errorThrown) {
+          					console.log("Error Member creation");
+          					console.log(jqXhr);
+          					console.log(textStatus);
+          					$("#main2").html(
+          							"<p>Patient creation Failed </p></br>"
+          									+ errorThrown)
+          				}
+          			});
+          }
+          
+         
+         
+         function getFHIRCondtionsData(data) {
+        	document.getElementById("tdiv").style.display = "none";
+        	document.getElementById("tdiv1").style.display = "block"
+          	document.getElementById("main2").style.display = "block";
+          	document.getElementById("loading-image1").style.display = "block";
+          	$('#loading-image1').show();
+          	$
+          			.ajax({
+          				url : 'https://fhir-ehr.sandboxcerner.com/dstu2/0b8a0111-e8e6-4c26-a91c-5069cbc6b1ca/Condition?patient='
+          						+ mpatientID,
+          				//url: 'https://fhir-ehr.sandboxcerner.com/dstu2/0b8a0111-e8e6-4c26-a91c-5069cbc6b1ca/Patient?name='+$("#name").val(),
+          				type : 'GET',
+          				dataType : 'json',
+          				headers : {
+          					'Accept' : 'application/json+fhir',
+          					'Content-Type' : 'application/json+fhir',
+          					'Authorization' : 'Bearer' + " "
+          							+ data.tokenResponse.access_token
+          				},
+          				success : function(result) {
+          					$('#loading-image1').hide();
+          					console.log("Conditions response");
+          					console.log(result);
+          					var count = result.total;
+          					var i = 0;
+          					console.log("Condition =" + count);
+          					
+          					var table = $('#example1').DataTable();
+          					table.clear().draw();
+          					if(count<1){
+          						$('#example1').append('<tr class="odd"><td valign="top" colspan="7" class="dataTables_empty">No Condition Records Found</td></tr>');
+          						console.log("No Conditions found quit");
+          						return;
+          					}
+          					var entries = result.entry;
+          					$
+          							.each(
+          									entries,
+          									function(index, value) {
+          
+          										//var name = result.entry[i].resource.name[0].text;
+          										var entry = result.entry[i].resource;
+          										console.log(entry);
+          										//var trow = ttable.insertRow(1);
+          										var asserter="NULL";
+          										var code="NULL";
+          										var category="NULL";
+          										var clinicalStatus="NULL";
+          										var verificationStatus="NULL";
+          										var notes="NULL";
+          										if ('asserter' in entry) {
+          											asserter = entry.asserter.reference+"-"+entry.asserter.display;
+          										}
+          										if ('code' in entry) {
+          											code = entry.code.text;
+          										}
+          										if ('category' in entry) {
+          											category = entry.category.text;
+          										}
+          										if ('clinicalStatus' in entry) {
+          											clinicalStatus = entry.clinicalStatus;
+          										}
+          										if ('verificationStatus' in entry) {
+          											verificationStatus = entry.verificationStatus;
+          										}
+          										if ('notes' in entry) {
+          											notes = entry.notes;
+          										}
+          										var counter = 1;
+          										var t = $('#example1')
+          												.DataTable();
+          										var link = entry.id;
+          										
+          										t.row
+          												.add(
+          														[
+          																link,
+          																asserter,
+          																code,
+          																category,
+          																clinicalStatus,
+          																verificationStatus,
+          																notes ])
+          												.draw(false);
+          										i = i + 1;
+          										// return (i !== count-1);
+          									});
+          					console.log("End condition response");
+          				},
+          				error : function(error) {
+          					$('#loading-image1').hide();
+          					$('#example1 tbody').innerHTML ="<p>No records Found</p>";
+          					console.log("Error condition error response");
+          				}
+          			});
+          
+          }
+         
+         
+         
+      </script>
+   </body>
 </html>
