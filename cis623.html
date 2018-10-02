@@ -1,0 +1,877 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <script src="js/jquery.js"></script>
+      <link rel="stylesheet" href="css/bootstrap.min.css">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+      <!-- For Calendar -->
+      <!-- Isolated Version of Bootstrap, not needed if your site already uses Bootstrap -->
+      <link rel="stylesheet"
+         href="https://formden.com/static/cdn/bootstrap-iso.css" />
+      <!-- Bootstrap Date-Picker Plugin -->
+      <script type="text/javascript"
+         src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
+      <link rel="stylesheet"
+         href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css" />
+      <!-- For Calendar -->
+      <style>
+         body {
+         background: #ffffff;
+         }
+         .connn {
+         border: 4px solid yellow;
+         outline: #4CAF50 solid 5px;
+         margin: auto;    
+         }
+         .button {
+         display: block;
+         width: 100%;
+         }
+      </style>
+      <style>
+         /* Reset Select */
+         select {
+         -webkit-appearance: none;
+         -moz-appearance: none;
+         -ms-appearance: none;
+         appearance: none;
+         outline: 0;
+         box-shadow: none;
+         border: 0 !important;
+         background: #2c3e50;
+         background-image: none;
+         }
+         /* Custom Select */
+         .select {
+         position: relative;
+         display: block;
+         width: 20em;
+         height: 3em;
+         line-height: 3;
+         background: #2c3e50;
+         overflow: hidden;
+         border-radius: .25em;
+         }
+         select {
+         width: 100%;
+         height: 100%;
+         margin: 0;
+         padding: 0 0 0 .5em;
+         color: #fff;
+         cursor: pointer;
+         }
+         select::-ms-expand {
+         display: none;
+         }
+         /* Arrow */
+         .select::after {
+         content: '\25BC';
+         position: absolute;
+         top: 0;
+         right: 0;
+         bottom: 0;
+         padding: 0 1em;
+         background: #34495e;
+         pointer-events: none;
+         }
+         /* Transition */
+         .select:hover::after {
+         color: #f39c12;
+         }
+         .select::after {
+         -webkit-transition: .25s all ease;
+         -o-transition: .25s all ease;
+         transition: .25s all ease;
+         }
+      </style>
+      <style>
+         table.blueTable {
+         border: 1px solid #1C6EA4;
+         background-color: #EEEEEE;
+         width: 100%;
+         text-align: left;
+         border-collapse: collapse;
+         }
+         table.blueTable td, table.blueTable th {
+         border: 1px solid #AAAAAA;
+         padding: 3px 2px;
+         }
+         table.blueTable tbody td {
+         font-size: 13px;
+         }
+         table.blueTable tr:nth-child(even) {
+         background: #D0E4F5;
+         }
+         table.blueTable thead {
+         background: #1C6EA4;
+         background: -moz-linear-gradient(top, #5592bb 0%, #327cad 66%, #1C6EA4 100%);
+         background: -webkit-linear-gradient(top, #5592bb 0%, #327cad 66%, #1C6EA4 100%);
+         background: linear-gradient(to bottom, #5592bb 0%, #327cad 66%, #1C6EA4 100%);
+         border-bottom: 2px solid #444444;
+         }
+         table.blueTable thead th {
+         font-size: 15px;
+         font-weight: bold;
+         color: #FFFFFF;
+         border-left: 2px solid #D0E4F5;
+         }
+         table.blueTable thead th:first-child {
+         border-left: none;
+         }
+         table.blueTable tfoot {
+         font-size: 14px;
+         font-weight: bold;
+         color: #FFFFFF;
+         background: #D0E4F5;
+         background: -moz-linear-gradient(top, #dcebf7 0%, #d4e6f6 66%, #D0E4F5 100%);
+         background: -webkit-linear-gradient(top, #dcebf7 0%, #d4e6f6 66%, #D0E4F5 100%);
+         background: linear-gradient(to bottom, #dcebf7 0%, #d4e6f6 66%, #D0E4F5 100%);
+         border-top: 2px solid #444444;
+         }
+         table.blueTable tfoot td {
+         font-size: 14px;
+         }
+         table.blueTable tfoot .links {
+         text-align: right;
+         }
+         table.blueTable tfoot .links a{
+         display: inline-block;
+         background: #1C6EA4;
+         color: #FFFFFF;
+         padding: 2px 8px;
+         border-radius: 5px;
+         }
+      </style>
+      <script>
+         $(document).ready(
+          		function() {
+          			
+          			var date_input = $('input[name="date"]'); //our date input has the name "date"
+          			var container = $('.bootstrap-iso form').length > 0 ? $(
+          					'.bootstrap-iso form').parent() : "body";
+          			date_input.datepicker({
+          				format : 'yyyy-mm-dd',
+          				container : container,
+          				todayHighlight : true,
+          				autoclose : true,
+          			});
+          			
+          			$("#datepicker").datepicker({ maxDate: new Date, minDate: new Date(1950, 1, 12) });
+          			 $(".chosen").chosen();
+          		});
+          $(function(){
+         	    $('#fdatepicker').datepicker({
+         	        format: 'yyyy-mm-dd',
+         	        endDate: '+0d',
+         	        autoclose: true
+         	    });
+         	});
+          
+          
+      </script>
+   </head>
+   <body>
+      <img src="images/Header_logo.jpg" width="100%" height="125px">
+      <div class="cover-container d-flex h-100 p-3 mx-auto flex-column">
+         <main role="main" class="inner cover">
+            <div class="container">
+            </div>
+            <div class="connn">
+               <p for="name" style="font-size: 17px; font-family: serif; font-weight: bold;text-align: center;">Select your Role</p>
+               <form style="text-align: center;">
+                  <label class="radio-inline">
+                  <input type="radio" name="optradio" onclick="handleClick(this);" value="financial">Financial Advisor
+                  </label>
+                  <label class="radio-inline">
+                  <input type="radio" onclick="handleClick(this);" name="optradio">Customer
+                  </label>
+               </form>
+            </div>
+            <br>
+            <div class="connn"  id="genquetions" style="display: block;">
+               <button type="button" id="myBtn1" class="btn btn-success btn-block" data-toggle="collapse" data-target="#demo0">General Questions</button>
+               <form>
+                  <div id="demo0" class="collapse">
+                     <div class="form-group">
+                        <p for="name" style="font-size: 17px; font-family: serif; font-weight: bold;">Name:</p>
+                        <input type="text" class="form-control" id="name" placeholder="Enter Name" name="name">
+                        <p for="name" style="font-size: 17px; font-family: serif; font-weight: bold;">Date of Birth :</p>
+                        <input type="text" class="form-control" id="fdatepicker">
+                        <div class="text-center"><button type="button" class="btn btn-primary btn-sm text-center" data-toggle="collapse" data-target="#demo1,#demo0">Next</button></div>
+                     </div>
+                  </div>
+               </form>
+            </div>
+            </br>
+            <div class="connn">
+               <button type="button" id="myBtn" class="btn btn-success btn-block" data-toggle="collapse" data-target="#demo1">Annual Income you want in Retirement</button>
+               <form>
+                  <div id="demo1" class="collapse">
+                     <p><font size="2" color="red">If you are married, you and your spouse should each fill out your own Ballpark E$timate® worksheet taking your marital status into
+                        account when entering your Social Security benefit in number 2 below.</font>
+                     </p>
+                     <div class="form-group">
+                        <label for="name">Yearly Earnings $ :</label>
+                        <input type="text" class="form-control" id="YearlyEarning" placeholder="Enter your Yearly Earnings" name="YearlyEarning">
+                        <label for="name">How much annual income will you want in retirement? :</label>
+                        <p>(Figure at least 70% of your current annual gross income
+                           just to maintain your current standard of living; however, you may want to enter a larger number. See the tips below.)
+                        </p>
+                        <input type="text" class="form-control" id="q1" placeholder="Enter Percentage greater than 70" name="q1">
+                        <p><font size="2" face="verdana" color="blue">Tips to help you select a goal:
+                           </br>--> 70% to 80% — You will need to pay for the basics in retirement, but you won't have to pay many medical expenses as your employer
+                           pays the Medicare Part B and D premium and provides employer-paid retiree health insurance. You're planning for a comfortable
+                           retirement without much travel. You are older and/or in your prime earning years.
+                           </br>--> 80% to 90% — You will need to pay your Medicare Part B and D premiums and pay for insurance to cover medical costs above
+                           Medicare, which on average covers about 55%. You plan to take some small trips, and you know that you will need to continue saving
+                           some money.
+                           </br>--> 100% to 120% — You will need to cover all Medicare and other health care costs. You are very young and/or your prime earning years
+                           are ahead of you. You would like a retirement lifestyle that is more than comfortable. You need to save for the possibility of long-term care.</font>
+                        </p>
+                     </div>
+                     <div class="text-center"><button type="button" class="btn btn-warning btn-sm text-center" data-toggle="collapse" data-target="#demo1,#demo0">   Back   </button><button type="button" class="btn btn-primary btn-sm text-center" data-toggle="collapse" data-target="#demo2,#demo1">Next</button></div>
+                  </div>
+               </form>
+            </div>
+            </br>
+            <div class="connn">
+               <button type="button" class="btn btn-success btn-block" data-toggle="collapse" data-target="#demo2">Subtract the income you expect to receive annually from</button>
+               <form>
+                  <div id="demo2" class="collapse">
+                     <div class="form-group">
+                        <p  style="font-size: 20px; font-family: serif; font-weight: bold;">Social Security :</p>
+                        <p><font size="2" face="verdana" color="blue">If you make under $25,000, enter $8,000; between $25,000 - $40,000, enter $12,000; over
+                           $40,000, enter $14,500 (For married couples - the lower earning spouse should enter either their own benefit based on their income or
+                           50% of the higher earning spouse's benefit, whichever is higher.)</font>
+                        </p>
+                        <div class="select">
+                           <select name="slct" id="lSecurity">
+                              <option value="male">Below $25,000</option>
+                              <option value="female">Between $25,000 - $40,000,</option>
+                              <option value="male">Over $40,000</option>
+                           </select>
+                        </div>
+                        </br>
+                        <p  style="font-size: 20px; font-family: serif; font-weight: bold;">Traditional Employer Pension :</p>
+                        <p><font size="2" face="verdana" color="blue">a plan that pays a set dollar amount for life, where the dollar amount depends on
+                           salary and years of service (in today's dollars)</font>
+                        </p>
+                        <input type="text" class="form-control" id="temp_pension" placeholder="Enter Traditional Employer Pension" name="YearlyEarning">
+                        <p style="font-size: 20px; font-family: serif; font-weight: bold;">Part-time income :</p>
+                        <input type="text" class="form-control" id="part_income" placeholder="Enter Part Time Income" name="YearlyEarning">
+                        <p  style="font-size: 20px; font-family: serif; font-weight: bold;">Other Income :</p>
+                        <p><font size="2" face="verdana" color="blue">(reverse annuity mortgage payments, earnings on assets, etc.)</font></p>
+                        <input type="text" class="form-control" id="temp_pension" placeholder="Enter Sum of all Other Income" name="YearlyEarning">
+                        <p  style="font-size: 20px; font-family: serif; font-weight: bold;">This is how much you need to make up for each retirement year:</p>
+                        <input type="text" class="form-control" id="eryear" placeholder="Enter Sum of all Other Income" name="YearlyEarning">
+                     </div>
+                     <div class="text-center">
+                        <button type="button" class="btn btn-warning btn-sm text-center" data-toggle="collapse" data-target="#demo2,#demo1">   Back   </button>
+                        <button type="button" class="btn btn-primary btn-sm text-center" data-toggle="collapse" data-target="#demo3,#demo2">Next</button>
+                     </div>
+                  </div>
+               </form>
+            </div>
+            </br>
+            <div class="connn">
+               <button type="button" class="btn btn-success btn-block" data-toggle="collapse" data-target="#demo3">Life Expectancy</button>
+               <form>
+                  <div id="demo3" class="collapse">
+                     <div class="form-group">
+                        <p for="name" style="font-size: 17px; font-family: serif; font-weight: bold;">Choose your factor based on life expectancy (at age 65):</p>
+                        <table class="blueTable">
+                           <thead>
+                              <tr>
+                                 <th>Age you expect to retire :</th>
+                                 <th>Male, 50th
+                                    percentile
+                                    (age 82)
+                                 </th>
+                                 <th>Female, 50th
+                                    percentile
+                                    (age 86)
+                                 </th>
+                                 <th>Male, 75th
+                                    percentile
+                                    (age 89)
+                                 </th>
+                                 <th>Female, 75th
+                                    percentile
+                                    (age 92)
+                                 </th>
+                                 <th>Male, 90th
+                                    percentile
+                                    (age 94)
+                                 </th>
+                                 <th>Female, 90th
+                                    percentile
+                                    (age 97)
+                                 </th>
+                              </tr>
+                           </thead>
+                           <tbody>
+                              <tr>
+                                 <td> 55</td>
+                                 <td>
+                                    <div>
+                                       <input type="radio" id="18.79" 
+                                          name="drone" value="18.79" />
+                                       <label for="huey">18.79</label>
+                                    </div>
+                                 </td>
+                                 <td>
+                                    <div>
+                                       <input type="radio" id="20.53" 
+                                          name="drone" value="20.53"  />
+                                       <label for="huey">20.53</label>
+                                    </div>
+                                 </td>
+                                 <td>
+                                    <div>
+                                       <input type="radio" id="21.71" 
+                                          name="drone" value="21.71"  />
+                                       <label for="huey">21.71</label>
+                                    </div>
+                                 </td>
+                                 <td>
+                                    <div>
+                                       <input type="radio" id="22.79" 
+                                          name="drone" value="22.79"  />
+                                       <label for="huey">22.79</label>
+                                    </div>
+                                 </td>
+                                 <td>
+                                    <div>
+                                       <input type="radio" id="23.46" 
+                                          name="drone" value="23.46"  />
+                                       <label for="huey">23.46</label>
+                                    </div>
+                                 </td>
+                                 <td>
+                                    <div>
+                                       <input type="radio" id="24.40" 
+                                          name="drone" value="24.40" />
+                                       <label for="huey">24.40</label>
+                                    </div>
+                                 </td>
+                              </tr>
+                              <tr>
+                              <tr>
+                                 <td> 60</td>
+                                 <td>
+                                    <div>
+                                       <input type="radio" id="16.31" 
+                                          name="drone" value="16.31" />
+                                       <label for="huey">16.31</label>
+                                    </div>
+                                 </td>
+                                 <td>
+                                    <div>
+                                       <input type="radio" id="18.32" 
+                                          name="drone" value="18.32" />
+                                       <label for="huey">18.32</label>
+                                    </div>
+                                 </td>
+                                 <td>
+                                    <div>
+                                       <input type="radio" id="19.68" 
+                                          name="drone" value="19.68" />
+                                       <label for="huey">19.68</label>
+                                    </div>
+                                 </td>
+                                 <td>
+                                    <div>
+                                       <input type="radio" id="20.93" 
+                                          name="drone" value="20.93" />
+                                       <label for="huey">20.93</label>
+                                    </div>
+                                 </td>
+                                 <td>
+                                    <div>
+                                       <input type="radio" id="21.71" 
+                                          name="drone" value="21.71" />
+                                       <label for="huey">21.71</label>
+                                    </div>
+                                 </td>
+                                 <td>
+                                    <div>
+                                       <input type="radio" id="22.79" 
+                                          name="drone" value="22.79" />
+                                       <label for="huey">22.79</label>
+                                    </div>
+                                 </td>
+                              </tr>
+                              <tr>
+                                 <td>65</td>
+                                 <td>
+                                    <div>
+                                       <input type="radio" id="13.45" 
+                                          name="drone" value="13.45" />
+                                       <label for="huey">13.45</label>
+                                    </div>
+                                 </td>
+                                 <td>
+                                    <div>
+                                       <input type="radio" id="15.77" 
+                                          name="drone" value="15.77" />
+                                       <label for="huey">15.77</label>
+                                    </div>
+                                 </td>
+                                 <td>
+                                    <div>
+                                       <input type="radio" id="17.35" 
+                                          name="drone" value="17.35" />
+                                       <label for="huey">17.35</label>
+                                    </div>
+                                 </td>
+                                 <td>
+                                    <div>
+                                       <input type="radio" id="18.79" 
+                                          name="drone" value="18.79" />
+                                       <label for="huey">18.79</label>
+                                    </div>
+                                 </td>
+                                 <td>
+                                    <div>
+                                       <input type="radio" id="19.68" 
+                                          name="drone" value="19.68" />
+                                       <label for="huey">19.68</label>
+                                    </div>
+                                 </td>
+                                 <td>
+                                    <div>
+                                       <input type="radio" id="20.93" 
+                                          name="drone" value="20.93" />
+                                       <label for="huey">20.93</label>
+                                    </div>
+                                 </td>
+                              </tr>
+                              <tr>
+                                 <td>70</td>
+                                 <td>
+                                    <div>
+                                       <input type="radio" id="10.15" 
+                                          name="drone" value="10.15" />
+                                       <label for="huey">10.15</label>
+                                    </div>
+                                 </td>
+                                 <td>
+                                    <div>
+                                       <input type="radio" id="12.83" 
+                                          name="drone" value="12.83" />
+                                       <label for="huey">12.83</label>
+                                    </div>
+                                 </td>
+                                 <td>
+                                    <div>
+                                       <input type="radio" id="14.65" 
+                                          name="drone" value="14.65" />
+                                       <label for="huey">14.65</label>
+                                    </div>
+                                 </td>
+                                 <td>
+                                    <div>
+                                       <input type="radio" id="16.31" 
+                                          name="drone" value="16.31" />
+                                       <label for="huey">16.31</label>
+                                    </div>
+                                 </td>
+                                 <td>
+                                    <div>
+                                       <input type="radio" id="17.35" 
+                                          name="drone" value="17.35" />
+                                       <label for="huey">17.35</label>
+                                    </div>
+                                 </td>
+                                 <td>
+                                    <div>
+                                       <input type="radio" id="18.79" 
+                                          name="drone" value="18.79" />
+                                       <label for="huey">18.79</label>
+                                    </div>
+                                 </td>
+                              </tr>
+                           </tbody>
+                        </table>
+                        <p id="selected" ></p>
+                        <div class="text-center">
+                           <button type="button" class="btn btn-warning btn-sm text-center" data-toggle="collapse" data-target="#demo3,#demo2">   Back   </button>
+                           <button type="button" class="btn btn-primary btn-sm text-center" data-toggle="collapse" data-target="#demo4,#demo3">Next</button>
+                        </div>
+                     </div>
+                  </div>
+               </form>
+            </div>
+            </br>
+            <div class="connn">
+               <button type="button" class="btn btn-success btn-block" data-toggle="collapse" data-target="#demo4">Early Retirement Age</button>
+               <form>
+                  <div id="demo4" class="collapse">
+                     <div class="form-group">
+                        <p for="name" style="font-size: 17px; font-family: serif; font-weight: bold;">Age you expect to retire:</p>
+                        <p><font size="2" face="verdana" color="blue">If you expect to retire before age 65, multiply your Social Security benefit from Question 2 by the factor below.
+                           <br>Age you expect to retire:     55 Your factor is: 8.8 <br>60 Your factor is:  4.7
+                           60 4.7</font>
+                        </p>
+                        <div class="select">
+                           <select name="slct" id="lGender">
+                              <option value="None">None</option>
+                              <option value="55">55</option>
+                              <option value="60">60</option>
+                           </select>
+                        </div>
+                        <div class="text-center">
+                           <button type="button" class="btn btn-warning btn-sm text-center" data-toggle="collapse" data-target="#demo4,#demo3">   Back   </button>
+                           <button type="button" class="btn btn-primary btn-sm text-center" data-toggle="collapse" data-target="#demo5,#demo4">Next</button>
+                        </div>
+                     </div>
+                  </div>
+               </form>
+            </div>
+            </br>
+            <div class="connn">
+               <button type="button" class="btn btn-success btn-block" data-toggle="collapse" data-target="#demo5">Savings</button>
+               <form>
+                  <div id="demo5" class="collapse">
+                     <div class="form-group">
+                        <p for="name" style="font-size: 17px; font-family: serif; font-weight: bold;">Overall Savings $:</p>
+                        <p><font size="2" face="verdana" color="blue"> include money accumulated in a 401(k), IRA, or similar
+                           retirement plan</font>
+                        </p>
+                        <input type="text" class="form-control" id="name" placeholder="Enter Sum of all Savings" name="name">
+                        <p for="name" style="font-size: 17px; font-family: serif; font-weight: bold;">Plan to Retire in :</p>
+                        <div class="select">
+                           <select name="slct" id="lGender">
+                              <option value="10">10 years</option>
+                              <option value="15">15 years</option>
+                              <option value="20">20 years</option>
+                              <option value="25">25 years</option>
+                              <option value="30">30 years</option>
+                              <option value="35">35 years</option>
+                              <option value="40">40 years</option>
+                           </select>
+                        </div>
+                        <table>
+                           <tr>
+                              <td>
+                                 <p><font size="2" face="verdana" color="blue">This amount will be multiplied by a factor, if you plan to retire in: </font></p>
+                              </td>
+                              <td>
+                                 <p><font size="2" face="verdana" color="blue">10 years Your factor is: 1.3</font></p>
+                              </td>
+                           </tr>
+                           <tr>
+                              <td></td>
+                              <td>
+                                 <p><font size="2" face="verdana" color="blue">15 years Your factor is: 1.6</font></p>
+                              </td>
+                           </tr>
+                           <tr>
+                              <td></td>
+                              <td>
+                                 <p><font size="2" face="verdana" color="blue">20 years Your factor is: 1.8</font></p>
+                              </td>
+                           </tr>
+                           <tr>
+                              <td></td>
+                              <td>
+                                 <p><font size="2" face="verdana" color="blue">25 years Your factor is: 2.1</font></p>
+                              </td>
+                           </tr>
+                           <tr>
+                              <td></td>
+                              <td>
+                                 <p><font size="2" face="verdana" color="blue">30 years Your factor is: 2.4</font></p>
+                              </td>
+                           </tr>
+                           <tr>
+                              <td></td>
+                              <td>
+                                 <p><font size="2" face="verdana" color="blue">35 years Your factor is: 2.8</font></p>
+                              </td>
+                           </tr>
+                           <tr>
+                              <td></td>
+                              <td>
+                                 <p><font size="2" face="verdana" color="blue">40 years Your factor is: 3.3</font></p>
+                              </td>
+                           </tr>
+                           <tr></tr>
+                           <tr></tr>
+                           <tr>
+                              <td>
+                                 <p for="name" style="font-size: 17px; font-family: serif; font-weight: bold;">Total additional savings needed at retirement: <u>$141,000</u></p>
+                              </td>
+                              <td></td>
+                           </tr>
+                        </table>
+                        <div class="text-center">
+                           <button type="button" class="btn btn-warning btn-sm text-center" data-toggle="collapse" data-target="#demo5,#demo4">   Back   </button>
+                           <button type="button" class="btn btn-primary btn-sm text-center" data-toggle="collapse" data-target="#demo5,#demo6">Next</button>
+                        </div>
+                     </div>
+                  </div>
+               </form>
+            </div>
+            </br>
+            <div class="connn">
+               <button type="button" class="btn btn-success btn-block" data-toggle="collapse" data-target="#demo6">ANNUAL amount you'll need to save</button>
+               <form>
+                  <div id="demo6" class="collapse">
+                     <div class="form-group">
+                        <p for="name" style="font-size: 17px; font-family: serif; font-weight: bold;">To determine the ANNUAL amount you'll need to save:</p>
+                        <table>
+                           <tr>
+                              <td>
+                                 <p><font size="2" face="verdana" color="blue">multiply the TOTAL amount by the factor below.
+                                    If you want to retire in: </font>
+                                 </p>
+                              </td>
+                              <td>
+                                 <p><font size="2" face="verdana" color="blue">10 years Your factor is: .085</font></p>
+                              </td>
+                           </tr>
+                           <tr>
+                              <td></td>
+                              <td>
+                                 <p><font size="2" face="verdana" color="blue">15 years Your factor is: .052</font></p>
+                              </td>
+                           </tr>
+                           <tr>
+                              <td></td>
+                              <td>
+                                 <p><font size="2" face="verdana" color="blue">20 years Your factor is: .036</font></p>
+                              </td>
+                           </tr>
+                           <tr>
+                              <td></td>
+                              <td>
+                                 <p><font size="2" face="verdana" color="blue">25 years Your factor is: .027</font></p>
+                              </td>
+                           </tr>
+                           <tr>
+                              <td></td>
+                              <td>
+                                 <p><font size="2" face="verdana" color="blue">30 years Your factor is: .020</font></p>
+                              </td>
+                           </tr>
+                           <tr>
+                              <td></td>
+                              <td>
+                                 <p><font size="2" face="verdana" color="blue">35 years Your factor is: .016</font></p>
+                              </td>
+                           </tr>
+                           <tr>
+                              <td></td>
+                              <td>
+                                 <p><font size="2" face="verdana" color="blue">40 years Your factor is: .013</font></p>
+                              </td>
+                           </tr>
+                           <tr></tr>
+                           <tr></tr>
+                           <tr>
+                              <td>
+                                 <p for="name" style="font-size: 17px; font-family: serif; font-weight: bold;">ANNUAL amount you'll need to save: <u>$125,000</u></p>
+                              </td>
+                              <td></td>
+                           </tr>
+                        </table>
+                        <div class="text-center">
+                           <button type="button" class="btn btn-warning btn-sm text-center" data-toggle="collapse" data-target="#demo6,#demo5">   Back   </button>
+                           <button type="button" class="btn btn-success btn-sm text-center" >Calculate</button>
+                           <button type="button" class="btn btn-danger btn-sm text-center" data-toggle="collapse" data-target="#demo6,#demo1">Reset</button>
+                           <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#exampleModalCenter">Print</button>
+                           <!-- Modal -->
+                           <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                              <div class="modal-dialog modal-dialog-centered" role="document">
+                                 <div class="modal-content">
+                                    <div class="modal-header">
+                                       <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+                                       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                       <span aria-hidden="true">&times;</span>
+                                       </button>
+                                    </div>
+                                    <div class="modal-body">
+                                       <table class="blueTable">
+                                          <tr>
+                                             <td><label for="name">Name : Lohith Nimmala</label></td>
+                                          </tr>
+                                          <tr>
+                                             <td> <label for="name">Age : 27 years</label></td>
+                                          </tr>
+                                          <tr>
+                                             <td> <label for="name">Yearly Earnings $ : 24000</label></td>
+                                          </tr>
+                                          <tr>
+                                             <td><label for="name">How much annual income will you want in retirement? :10000</label></td>
+                                          </tr>
+                                          <tr>
+                                             <td><label for="name">Traditional Employer Pension : $:800</label></td>
+                                          </tr>
+                                          <tr>
+                                             <td><label for="name">Part-time income $:250</label></td>
+                                          </tr>
+                                          <tr>
+                                             <td><label for="name">Other income $:375</label></td>
+                                          </tr>
+                                          <tr>
+                                             <td><label for="name">how much you need to make up for each retirement year: $:15250</label></td>
+                                          </tr>
+                                          <tr>
+                                             <td><label for="name">Overall Savings $:1250</label></td>
+                                          </tr>
+                                          <tr>
+                                             <td><label for="name">Total additional savings needed at retirement $: 141,000</label></td>
+                                          </tr>
+                                          <tr>
+                                             <td><label for="name">ANNUAL amount you'll need to save: $125,000</label></td>
+                                          </tr>
+                                       </table>
+                                       <br>
+                                    </div>
+                                    <div class="modal-footer">
+                                       <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                       <button type="button" class="btn btn-primary">PRINT</button>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                           <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#exampleModalCenter2">What If</button>
+                           <!-- Modal -->
+                           <div class="modal fade" id="exampleModalCenter2" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                              <div class="modal-dialog modal-dialog-centered" role="document">
+                                 <div class="modal-content">
+                                    <div class="modal-header">
+                                       <h5 class="modal-title" id="exampleModalLongTitle">Retirement Details</h5>
+                                       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                       <span aria-hidden="true">&times;</span>
+                                       </button>
+                                    </div>
+                                    <div class="modal-body">
+                                       <label for="name">Yearly Earnings $ :</label>
+                                       <input type="text" class="form-control" id="YearlyEarning" placeholder="Enter your Yearly Earnings" name="YearlyEarning">
+                                       <label for="name">How much annual income will you want in retirement? :</label>
+                                       <input type="text" class="form-control" id="q1" placeholder="Enter Percentage greater than 70" name="q1">
+                                       <label for="name">Overall Savings $:</label>
+                                       <input type="text" class="form-control" id="q1" placeholder="Enter Overall Savings" name="q1">
+                                       <p style="font-size: 17px; font-family: serif; font-weight: bold;">Plan to Retire in :</p>
+                                       <div class="select">
+                                          <select name="slct" id="lGender">
+                                             <option value="10">10 years</option>
+                                             <option value="15">15 years</option>
+                                             <option value="20">20 years</option>
+                                             <option value="25">25 years</option>
+                                             <option value="30">30 years</option>
+                                             <option value="35">35 years</option>
+                                             <option value="40">40 years</option>
+                                          </select>
+                                       </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                       <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                       <button type="button" class="btn btn-primary">Save changes</button>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+            </div>
+            </form>
+      </div>
+      </br>
+      </br>
+      </main>
+      </div>
+   </body>
+   <script>
+      var x, i, j, selElmnt, a, b, c;
+      /*look for any elements with the class "custom-select":*/
+      x = document.getElementsByClassName("custom-select");
+      for (i = 0; i < x.length; i++) {
+        selElmnt = x[i].getElementsByTagName("select")[0];
+        /*for each element, create a new DIV that will act as the selected item:*/
+        a = document.createElement("DIV");
+        a.setAttribute("class", "select-selected");
+        a.innerHTML = selElmnt.options[selElmnt.selectedIndex].innerHTML;
+        x[i].appendChild(a);
+        /*for each element, create a new DIV that will contain the option list:*/
+        b = document.createElement("DIV");
+        b.setAttribute("class", "select-items select-hide");
+        for (j = 0; j < selElmnt.length; j++) {
+          /*for each option in the original select element,
+          create a new DIV that will act as an option item:*/
+          c = document.createElement("DIV");
+          c.innerHTML = selElmnt.options[j].innerHTML;
+          c.addEventListener("click", function(e) {
+              /*when an item is clicked, update the original select box,
+              and the selected item:*/
+              var y, i, k, s, h;
+              s = this.parentNode.parentNode.getElementsByTagName("select")[0];
+              h = this.parentNode.previousSibling;
+              for (i = 0; i < s.length; i++) {
+                if (s.options[i].innerHTML == this.innerHTML) {
+                  s.selectedIndex = i;
+                  h.innerHTML = this.innerHTML;
+                  y = this.parentNode.getElementsByClassName("same-as-selected");
+                  for (k = 0; k < y.length; k++) {
+                    y[k].removeAttribute("class");
+                  }
+                  this.setAttribute("class", "same-as-selected");
+                  break;
+                }
+              }
+              h.click();
+          });
+          b.appendChild(c);
+        }
+        x[i].appendChild(b);
+        a.addEventListener("click", function(e) {
+            /*when the select box is clicked, close any other select boxes,
+            and open/close the current select box:*/
+            e.stopPropagation();
+            closeAllSelect(this);
+            this.nextSibling.classList.toggle("select-hide");
+            this.classList.toggle("select-arrow-active");
+          });
+      }
+      function closeAllSelect(elmnt) {
+        /*a function that will close all select boxes in the document,
+        except the current select box:*/
+        var x, y, i, arrNo = [];
+        x = document.getElementsByClassName("select-items");
+        y = document.getElementsByClassName("select-selected");
+        for (i = 0; i < y.length; i++) {
+          if (elmnt == y[i]) {
+            arrNo.push(i)
+          } else {
+            y[i].classList.remove("select-arrow-active");
+          }
+        }
+        for (i = 0; i < x.length; i++) {
+          if (arrNo.indexOf(i)) {
+            x[i].classList.add("select-hide");
+          }
+        }
+      }
+      /*if the user clicks anywhere outside the select box,
+      then close all select boxes:*/
+      document.addEventListener("click", closeAllSelect);
+   </script>
+   <script>
+      function handleClick(myRadio) {
+        if(myRadio.value =="financial") {
+      	  document.getElementById("genquetions").style.display = "none";
+      	  document.getElementById("demo1").setAttribute("class", "collapse in");
+      	  
+        } else{
+      	  document.getElementById("genquetions").style.display = "block";
+      	  document.getElementById("demo0").setAttribute("class", "collapse in");
+        }
+      }
+   </script>
+</html>
